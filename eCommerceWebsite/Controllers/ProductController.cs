@@ -10,6 +10,7 @@ namespace eCommerceWebsite.Controllers
 {
     public class ProductController : Controller
     {
+        //Test commit
         private readonly ProductContext _context;
         public ProductController(ProductContext context)
         {
