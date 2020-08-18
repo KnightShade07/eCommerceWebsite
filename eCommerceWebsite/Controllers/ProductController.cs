@@ -15,7 +15,7 @@ namespace eCommerceWebsite.Controllers
         {
             _context = context;
         }
-        
+
         public IActionResult Index()
         {
             //Get all products from DB.
