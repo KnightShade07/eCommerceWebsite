@@ -49,5 +49,32 @@ namespace eCommerceWebsite.Controllers
 
             return View();
         }
+        [HttpGet]
+        public  async Task<IActionResult> Edit(int id)
+        {
+            //Get Product with corrosponding id.
+            Product p =
+                await (from prod in _context.Products
+                       where prod.ProductID == id
+                       select prod).SingleAsync();
+            //Pass product to view.
+            return View(p);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Product p)
+        {
+            //if all the validation checks pass
+            if (ModelState.IsValid)
+            {
+                _context.Entry(p).State = EntityState.Modified; //note, Modified is not a function
+                await _context.SaveChangesAsync();
+
+                ViewData["Message"] = "Product updated successfully!";
+               
+            }
+
+            return View(p);
+        }
     } 
 }
