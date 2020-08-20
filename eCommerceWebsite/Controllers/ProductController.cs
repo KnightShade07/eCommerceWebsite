@@ -16,12 +16,21 @@ namespace eCommerceWebsite.Controllers
         {
             _context = context;
         }
-
-        public async Task<IActionResult> Index()
+        /// <summary>
+        /// Displays a view that lists a page of products.
+        /// </summary>
+        /// 
+        public async Task<IActionResult> Index(int? id)
         {
+            int pageNum = id ?? 1;
+            const int pageSize = 3;
+
             //Get all products from DB.
             List<Product> products = await (from p in _context.Products
-                                      select p).ToListAsync();
+                                            orderby p.Title ascending
+                                      select p)
+                                      .Skip(pageSize * (pageNum - 1)) //Skip() must be before Take().
+                                      .Take(pageSize).ToListAsync();
             
             return View(products);
         }
@@ -32,6 +41,7 @@ namespace eCommerceWebsite.Controllers
         }
 
         [HttpPost]
+
         public async Task<IActionResult> Add(Product p)
         {
             if (ModelState.IsValid)
