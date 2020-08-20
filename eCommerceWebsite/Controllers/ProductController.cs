@@ -76,7 +76,7 @@ namespace eCommerceWebsite.Controllers
 
             return View(p);
         }
-
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             Product p =
