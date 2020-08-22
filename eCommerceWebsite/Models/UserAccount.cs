@@ -25,13 +25,18 @@ namespace eCommerceWebsite.Models
         [Required]
         public string Email { get; set; }
         [Required]
+        [EmailAddress]
+        [StringLength(200)]
         [Compare(nameof(Email))]
+        [Display(Name = "Confirm Email: ")]
         public string ConfirmEmail { get; set; }
         [Required]
         [DataType(DataType.Password)]
+        [StringLength(120, MinimumLength = 8, ErrorMessage ="Password must be between {2} and {1} characters long")]
         public string Password { get; set; }
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name ="Confirm Password: ")]
         [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
         [DataType(DataType.Date)] //Time is ignored.
