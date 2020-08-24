@@ -61,7 +61,7 @@ namespace eCommerceWebsite.Controllers
             return View();
         }
         [HttpGet]
-        public  async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             //Get Product with corrosponding id.
             Product p =
