@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using eCommerceWebsite.Data;
 using eCommerceWebsite.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,9 +46,14 @@ namespace eCommerceWebsite.Controllers
             }
             return View(reg);
         }
-
+        [HttpGet]
         public IActionResult Login()
         {
+            //check if user already logged in.
+            if (HttpContext.Session.GetInt32("UserId").HasValue)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -72,6 +78,7 @@ namespace eCommerceWebsite.Controllers
             }
 
             //Log user into website
+            HttpContext.Session.SetInt32("UserId", account.UserID);
 
             return RedirectToAction("Index", "Home");
         }
