@@ -37,6 +37,8 @@ namespace eCommerceWebsite
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.IsEssential = true;
             });
+
+            services.AddHttpContextAccessor();
         }
 
         
