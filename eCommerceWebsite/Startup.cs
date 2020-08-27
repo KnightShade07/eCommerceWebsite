@@ -29,6 +29,16 @@ namespace eCommerceWebsite
 
             services.AddDbContext<ProductContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddHttpContextAccessor();
         }
 
         
@@ -52,6 +62,9 @@ namespace eCommerceWebsite
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //must be between UseRouting() and UseEndPoints()!
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

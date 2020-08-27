@@ -45,4 +45,14 @@ namespace eCommerceWebsite.Models
         [StringLength(20)]
         public string Username { get; set; }
     }
+
+    public class LoginViewModel
+    {
+        [Required]
+        [Display(Name ="Username Or Email: ")]
+        public string UsernameOrEmail { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+    }
 }

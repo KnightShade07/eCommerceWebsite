@@ -1,4 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.EntityFrameworkCore
+@inject IHttpContextAccessor sessionData
+@inject eCommerceWebsite.Data.ProductContext db
+
+@{ 
+    int? userId = sessionData.HttpContext.Session.GetInt32("UserId");
+    string userName = null;
+    if (userId.HasValue)
+    {
+         userName =  await (from u in db.UserAccounts
+                           where u.UserID == userId
+                           select u.Username).SingleOrDefaultAsync();
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,9 +42,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">Catalog</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="User" asp-action="Register">Create An Account!</a>
-                        </li>
+                        @if (userId == null) //if user is not logged in.
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="User" asp-action="Register">Create An Account!</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="User" asp-action="Login">Login Page</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark disabled">Welcome @userName!</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
