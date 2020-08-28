@@ -64,6 +64,8 @@ namespace eCommerceWebsite.Controllers
                 _context.UserAccounts.Add(userAccount);
                  await _context.SaveChangesAsync();
 
+                LogUserIn(userAccount.UserID);
+
                 //redirect to home page.
                 return RedirectToAction("Index", "Home");
                 
@@ -84,7 +86,7 @@ namespace eCommerceWebsite.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -101,10 +103,15 @@ namespace eCommerceWebsite.Controllers
                 return View(model);
             }
 
-            //Log user into website
-            HttpContext.Session.SetInt32("UserId", account.UserID);
+            LogUserIn(account.UserID);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        private void LogUserIn(int accountId)
+        {
+            //Log user into website
+            HttpContext.Session.SetInt32("UserId", accountId);
         }
 
         public IActionResult Logout()
