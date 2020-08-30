@@ -29,17 +29,7 @@ namespace eCommerceWebsite.Controllers
         /// 
         public  async Task<IActionResult> Add(int id)
         {
-            const string CartCookie = "CartCookie";
             Product p = await ProductDB.GetProductAsync(_context, id);
-            //get existing cart items
-            string existingItems =_httpContext.HttpContext.Request.Cookies[CartCookie];
-            //add current product to existing cart.
-            List<Product> cartProducts = new List<Product>();
-            if(existingItems != null)
-            {
-                cartProducts = JsonConvert.DeserializeObject<List<Product>>(existingItems);
-            }
-            cartProducts.Add(p);
 
             //Add product to cart cookie
             string data = JsonConvert.SerializeObject(p);
@@ -50,17 +40,14 @@ namespace eCommerceWebsite.Controllers
                 IsEssential = true
             };
 
-            _httpContext.HttpContext.Response.Cookies.Append(CartCookie, data, options);
+            _httpContext.HttpContext.Response.Cookies.Append("CartCookie", data, options);
 
             return RedirectToAction("Index", "Product");
         }
 
         public IActionResult Summary()
         {
-            string cookieData = _httpContext.HttpContext.Request.Cookies["CartCookie"];
-
-            List<Product> cartProducts = JsonConvert.DeserializeObject<List<Product>>(cookieData);
-            return View(cartProducts);
+            return View();
         }
     }
 }
