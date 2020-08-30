@@ -47,7 +47,10 @@ namespace eCommerceWebsite.Controllers
 
         public IActionResult Summary()
         {
-            return View();
+            string cookieData = _httpContext.HttpContext.Request.Cookies["CartCookie"];
+
+            List<Product> cartProducts = JsonConvert.DeserializeObject<List<Product>>(cookieData);
+            return View(cartProducts);
         }
     }
 }
