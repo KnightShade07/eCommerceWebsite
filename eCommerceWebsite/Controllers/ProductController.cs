@@ -99,7 +99,9 @@ namespace eCommerceWebsite.Controllers
             _context.Entry(p).State = EntityState.Deleted;
 
             await _context.SaveChangesAsync();
-
+            //Need to use TempData here instead of
+            //ViewData, or else message data will
+            //be lost.
             TempData["Message"] = $"{p.Title} was deleted";
 
             return RedirectToAction("Index");

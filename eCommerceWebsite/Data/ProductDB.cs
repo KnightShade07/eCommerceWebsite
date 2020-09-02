@@ -48,7 +48,12 @@ namespace eCommerceWebsite.Data
             await _context.SaveChangesAsync();
             return p;
         }
-
+        /// <summary>
+        /// Gets a single product from the database.
+        /// </summary>
+        /// <param name="context">The Database Context Object</param>
+        /// <param name="prodID">The ID of the product.</param>
+        /// <returns></returns>
         public static async Task <Product> GetProductAsync(ProductContext context, int prodID)
         {
             Product p = await (from products in context.Products

@@ -23,6 +23,11 @@ namespace eCommerceWebsite.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// The method responsible for registering a user.
+        /// </summary>
+        /// <param name="reg">Object that holds the RegisterViewModel Data</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel reg)
         {
@@ -82,6 +87,11 @@ namespace eCommerceWebsite.Controllers
             }
             return View();
         }
+        /// <summary>
+        /// The method used for logging users in.
+        /// </summary>
+        /// <param name="model">The model name holding the LoginViewModel Data.</param>
+        /// <returns></returns>
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
