@@ -37,7 +37,9 @@ namespace eCommerceWebsite.Controllers
 
             return Redirect(prevURL);
         }
-
+        /// <summary>
+        /// Gives a summary of cart products using cookies
+        /// </summary>
         public IActionResult Summary()
         {
             return View(CookieHelper.getCartProducts(_httpContext));
