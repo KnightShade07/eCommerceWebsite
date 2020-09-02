@@ -32,6 +32,8 @@ namespace eCommerceWebsite.Controllers
             Product p = await ProductDB.GetProductAsync(_context, id);
 
             CookieHelper.AddProductToCart(_httpContext, p);
+            //must use tempData in order to redirect successfully with a message.
+            TempData["Message"] =  p.Title + " added successfully";
 
             return RedirectToAction("Index", "Product");
         }
